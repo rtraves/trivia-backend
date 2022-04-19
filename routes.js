@@ -4,10 +4,10 @@ const Question = require('./models/Question');
 router.use(express.json());
 
 
-// get all quiz questions
+// get all valid quiz questions
 router.get('/questions', async (req, res) => {
     try {
-        const questions = await Question.find();
+        const questions = await Question.find({isValid: true});
         return res.status(200).json(questions);
     } catch (error) {
         return res.status(500).json({"error":error});
@@ -28,7 +28,7 @@ router.get('/questions/:id', async (req, res) => {
     } catch (error) {
         return res.status(500).json({"error":error})
     }
-})
+});
 
 // create one quiz question
 router.post('/questions', async (req, res) => {
