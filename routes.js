@@ -4,10 +4,10 @@ const Question = require('./models/Question');
 router.use(express.json());
 
 
-// get all valid quiz questions
+// get 12 random quiz questions
 router.get('/questions', async (req, res) => {
     try {
-        const questions = await Question.find({isValid: true});
+        const questions = await Question.aggregate([{$match: {isValid: true}},{ $sample: { size: 12} }]);
         return res.status(200).json(questions);
     } catch (error) {
         return res.status(500).json({"error":error});
