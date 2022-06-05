@@ -7,7 +7,7 @@ router.use(express.json());
 // get 12 random quiz questions
 router.get('/questions', async (req, res) => {
     try {
-        const questions = await Question.aggregate([{$match: {isValid: true}},{ $sample: { size: 12} }]);
+        const questions = await Question.aggregate([{ $sample: { size: 12} }]);
         return res.status(200).json(questions);
     } catch (error) {
         return res.status(500).json({"error":error});
@@ -19,7 +19,7 @@ router.get('/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id
 
-        const question = await Question.findOne({_id})        
+        const question = await Question.findOne({_id}) 
         if(!question){
             return res.status(404).json({})
         }else{
