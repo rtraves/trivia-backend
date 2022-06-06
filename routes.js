@@ -13,9 +13,19 @@ router.get('/questions', async (req, res) => {
         return res.status(500).json({"error":error});
     }
 });
+// get all questions for admin page
+router.get('/admin/questions', async (req, res) => {
+    try {
+        const questions = await Question.find();
+        return res.status(200).json(questions);
+    } catch (error) {
+        return res.status(500).json({"error":error});
+    }
+});
+
 
 // get one quiz question
-router.get('/questions/:id', async (req, res) => {
+router.get('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id
 
@@ -53,7 +63,7 @@ router.post('/questions', async (req, res) => {
 })
 
 // update one quiz question
-router.put('/questions/:id', async (req, res) => {
+router.put('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id 
         const { text, answer, category, isValid } = req.body
@@ -82,7 +92,7 @@ router.put('/questions/:id', async (req, res) => {
 })
 
 // delete one quiz question
-router.delete('/questions/:id', async (req, res) => {
+router.delete('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id 
 
