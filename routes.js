@@ -4,10 +4,10 @@ const Question = require('./models/Question');
 router.use(express.json());
 
 
-// get 12 random quiz questions
+// get 12 random trivia questions
 router.get('/questions', async (req, res) => {
     try {
-        const questions = await Question.aggregate([{ $sample: { size: 12} }]);
+        const questions = await Question.aggregate([{$match: {isValid: true}},{ $sample: { size: 12} }]);
         return res.status(200).json(questions);
     } catch (error) {
         return res.status(500).json({"error":error});
@@ -24,7 +24,7 @@ router.get('/admin/questions', async (req, res) => {
 });
 
 
-// get one quiz question
+// get one trivia question
 router.get('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id
@@ -40,7 +40,7 @@ router.get('/admin/questions/:id', async (req, res) => {
     }
 });
 
-// create one quiz question
+// create one trivia question
 router.post('/questions', async (req, res) => {
     try {
         const { text }  = req.body
@@ -62,7 +62,7 @@ router.post('/questions', async (req, res) => {
     }
 })
 
-// update one quiz question
+// update one trivia question
 router.put('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id 
@@ -91,7 +91,7 @@ router.put('/admin/questions/:id', async (req, res) => {
     }
 })
 
-// delete one quiz question
+// delete one trivia question
 router.delete('/admin/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id 
